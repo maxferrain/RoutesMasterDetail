@@ -1,0 +1,157 @@
+<dx-data-grid
+  id="gridContainer"
+  [dataSource]="districts"
+  [masterDetail]="{ enabled: true, template: 'detail' }"
+  keyExpr="ID"
+  [showBorders]="true"
+>
+  <dxi-column dataField="ID" caption="№"></dxi-column>
+  <dxi-column
+    dataField="districtName"
+    [width]="70"
+    caption="ФО РФ"
+  ></dxi-column>
+
+  <dxi-column caption="Мужчины">
+    <dxi-column dataField="man1Dist" caption="0-18"></dxi-column>
+
+    <dxi-column dataField="man2Dist" caption="18-60"></dxi-column>
+
+    <dxi-column dataField="man3Dist" caption="60+"></dxi-column>
+  </dxi-column>
+
+  <dxi-column caption="Женщины">
+    <dxi-column dataField="woman1Dist" caption="0-18"></dxi-column>
+
+    <dxi-column dataField="woman2Dist" caption="18-60"></dxi-column>
+
+    <dxi-column dataField="woman3Dist" caption="60+"></dxi-column>
+  </dxi-column>
+
+  <dxi-column dataField="totalDist" caption="Итого"></dxi-column>
+
+  <div *dxTemplate="let districts of 'detail'">
+    <div class="master-detail-caption">
+      {{"Данные по регионам в " + districts.data.districtName}}
+    </div>
+
+    <dx-data-grid
+      [dataSource]="getRegions(districts.key)"
+      [showBorders]="true"
+      [columnAutoWidth]="true"
+      [masterDetail]="{ enabled: true, template: 'detail2' }"
+      keyExpr="ID"
+    >
+      <dxi-column dataField="ID" caption="№"></dxi-column>
+      <dxi-column dataField="regionName" caption="Регион РФ"></dxi-column>
+
+      <dxi-column caption="Мужчины">
+        <dxi-column
+          dataField="man1Reg"
+          dataType="data"
+          caption="0-18"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="man2Reg"
+          dataType="data"
+          caption="18-60"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="man3Reg"
+          dataType="data"
+          caption="60+"
+        ></dxi-column>
+      </dxi-column>
+
+      <dxi-column caption="Женщины">
+        <dxi-column
+          dataField="woman1Reg"
+          dataType="data"
+          caption="0-18"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="woman2Reg"
+          dataType="data"
+          caption="18-60"
+        ></dxi-column>
+
+        <dxi-column
+          dataField="woman3Reg"
+          dataType="data"
+          caption="60+"
+        ></dxi-column>
+      </dxi-column>
+
+      <dxi-column
+        dataField="totalReg"
+        dataType="data"
+        caption="Итого"
+      ></dxi-column>
+
+      <div *dxTemplate="let regions of 'detail2'">
+        <div class="master-detail-caption">
+          {{"Данные по перевозкам в регионе: " + regions.data.regionName}}
+        </div>
+        <dx-data-grid
+          [dataSource]="getRoutes(regions.key)"
+          [showBorders]="true"
+          [columnAutoWidth]="true"
+        >
+          <dxi-column dataField="ID" caption="№"></dxi-column>
+          <dxi-column dataField="cityFrom" caption="Откуда"></dxi-column>
+
+          <dxi-column dataField="cityTo" caption="Куда"></dxi-column>
+
+          <dxi-column caption="Мужчины">
+            <dxi-column
+              dataField="man1Rou"
+              dataType="data"
+              caption="0-18"
+            ></dxi-column>
+
+            <dxi-column
+              dataField="man2Rou"
+              dataType="data"
+              caption="18-60"
+            ></dxi-column>
+
+            <dxi-column
+              dataField="man3Rou"
+              dataType="data"
+              caption="60+"
+            ></dxi-column>
+          </dxi-column>
+
+          <dxi-column caption="Женщины">
+            <dxi-column
+              dataField="woman1Rou"
+              dataType="data"
+              caption="0-18"
+            ></dxi-column>
+
+            <dxi-column
+              dataField="woman2Rou"
+              dataType="data"
+              caption="18-60"
+            ></dxi-column>
+
+            <dxi-column
+              dataField="woman3Rou"
+              dataType="data"
+              caption="60+"
+            ></dxi-column>
+          </dxi-column>
+
+          <dxi-column
+            dataField="totalRou"
+            dataType="data"
+            caption="Итого"
+          ></dxi-column>
+        </dx-data-grid>
+      </div>
+    </dx-data-grid>
+  </div>
+</dx-data-grid>
